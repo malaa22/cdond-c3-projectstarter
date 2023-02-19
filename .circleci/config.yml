@@ -100,13 +100,13 @@ jobs:
             
   deploy-infrastructure:
     docker:
-      image: amazon/aws-cli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-            yum -y install tr gzip
+            yum -y install tar gzip
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
