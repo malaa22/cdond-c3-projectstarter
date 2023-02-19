@@ -135,11 +135,11 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt 
+            - ~/inventory.txt 
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
@@ -149,7 +149,7 @@ jobs:
           fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
       - attach_workspace:
           at: ~/
-      - run: cat /project/.circleci/ansible/inventory.txt 
+      - run: inventory.txt 
       - run:
           name: Install dependencies
           command: |
