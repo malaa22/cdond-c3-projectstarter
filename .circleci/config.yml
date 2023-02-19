@@ -157,7 +157,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            yum -y install tar gzip
+            apk add --upade tar gzip
             ansible-playbook -i inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure  
           
