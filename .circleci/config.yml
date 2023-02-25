@@ -251,6 +251,38 @@ jobs:
             - api_url.txt
       - destroy_environment  
       - revert_migrations 
+      
+  deploy-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - add_ssh_keys:
+          fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update -y
+            sudo apt-get install -y python3
+            sudo apt-get install -y awscli tar ansible
+      - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm install
+            npm run build
+            cd ..
+            tar -C backend -czvf artifact.tar.gz .
+            cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files
+            echo "Contents  of the inventory.txt file is:"
+            cat ~/inventory.txt
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/inventory.txt .circleci/ansible/deploy-backend.yml
+      - destroy_environment  
+      - revert_migrations  
 
 
 
