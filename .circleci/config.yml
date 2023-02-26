@@ -269,6 +269,8 @@ jobs:
           fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
       - attach_workspace:
           at: ~/
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -288,7 +290,7 @@ jobs:
             cat ~/inventory.txt
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/inventory.txt .circleci/ansible/deploy-backend.yml
       - destroy_environment  
-      - revert_migrations
+      - revert_migrations  
   
   smoke-test:
     docker:
