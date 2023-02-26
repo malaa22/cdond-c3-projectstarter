@@ -156,14 +156,21 @@ jobs:
               --tags project=udapeople \
               --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7} 
+     
+      - run:
+          name: Create inventory file
+          command: |
+            touch ~/inventory.txt
+            echo "[web]" > ~/inventory.txt
       - run:
           name: Add back-end ip to ansible inventory
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> ~/inventory.txt
+            cat ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - inventory.txt 
+            - inventory.txt
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
@@ -183,7 +190,7 @@ jobs:
           command: |
             apk add --update tar gzip
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i ~/inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure  
       
   run-migrations:
