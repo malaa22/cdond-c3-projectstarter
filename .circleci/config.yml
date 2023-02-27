@@ -210,7 +210,10 @@ jobs:
           name: Run migrations
           command: |
               cd backend
+              npm cache clean --force
+              rm -rf node_modules
               npm install
+              npm start
               npm run migrations > ~/migrations_dump.txt      
           
       - run:
@@ -223,6 +226,7 @@ jobs:
               fi
       - destroy_environment
       - revert_migrations
+      
   deploy-frontend:
     docker:
       - image: amazon/aws-cli
