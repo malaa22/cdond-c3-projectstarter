@@ -266,8 +266,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
       - add_ssh_keys:
           fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
       - attach_workspace:
@@ -322,12 +320,12 @@ jobs:
           command: |
               if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com/#/employees | grep "Welcome"
               then
-                exit 1
+                exit 0
               else
                 exit 1
               fi
       - destroy_environment  
-      - revert_migrations  
+      - revert_migrations 
 
 
 workflows:
