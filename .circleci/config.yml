@@ -320,7 +320,7 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-              if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees | grep "Welcome"
+              if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com/#/employees | grep "Welcome"
               then
                 exit 1
               else
@@ -345,6 +345,9 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]          
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
