@@ -33,7 +33,6 @@ commands:
               npm install
               npm run migrations:revert #revert the successful migration
             fi
-
 jobs:
   build-frontend:
     docker:
