@@ -177,7 +177,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
+          fingerprints: ["c8:d3:e2:21:53:09:39:b3:07:96:26:c2:22:d4:e0:3d"]
       - attach_workspace:
           at: ~/
       - run: cat ~/inventory.txt 
@@ -267,7 +267,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["bb:52:44:dd:23:fd:8f:b1:7e:2d:9b:e4:57:08:56:59"]
+          fingerprints: ["c8:d3:e2:21:53:09:39:b3:07:96:26:c2:22:d4:e0:3d"]
       - attach_workspace:
           at: ~/
           
@@ -319,7 +319,7 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-              if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com/#/employees | grep "Welcome"
+              if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees | grep "Welcome"
               then
                 exit 0
               else
