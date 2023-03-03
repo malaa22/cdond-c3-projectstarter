@@ -1,0 +1,3 @@
+Prometheus server:
+
+http://ec2-35-160-239-64.us-west-2.compute.amazonaws.com:9090/targets
